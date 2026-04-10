@@ -1,0 +1,456 @@
+/**
+ * Vote page — student voting interface
+ */
+
+(function () {
+  // ── Session guard ────────────────────────────────────
+  let session;
+  try { session = JSON.parse(sessionStorage.getItem('dps_user')); } catch { }
+  if (!session || session.is_admin) { window.location.href = 'index.html'; return; }
+  if (session.is_admin) { window.location.href = 'admin.html'; return; }
+
+  // ── State ────────────────────────────────────────────
+  let items = [];         // All menu items from DB
+  let settings = {};      // App settings (voting open, week, etc.)
+  let votes = {};         // { day: { category: item_id } }
+  let fixedItems = [];    // Fixed items from admin
+  let disabledDays = [];  // Days disabled by admin
+  let currentDay = 'monday';
+  let userXP = 0;
+
+  // ── DOM ──────────────────────────────────────────────
+  const loading = document.getElementById('loading-overlay');
+  const loadingText = document.getElementById('loading-text');
+  const mealSections = document.getElementById('meal-sections');
+  const dayBtns = document.querySelectorAll('.day-btn');
+  const starInfoText = document.getElementById('star-info-text');
+  const starUsedBadge = document.getElementById('star-used-badge');
+  const starInfoBar = document.getElementById('star-info-bar');
+  const fixedNotice = document.getElementById('fixed-item-notice');
+  const fixedText = document.getElementById('fixed-item-text');
+  const saveBtn = document.getElementById('save-votes-btn');
+  const closedBanner = document.getElementById('voting-closed-banner');
+  const votingMain = document.getElementById('voting-main');
+
+  // ── Helpers ──────────────────────────────────────────
+  function showLoading(text = 'Loading…') {
+    loading.style.display = 'flex';
+    loadingText.textContent = text;
+  }
+  function hideLoading() { loading.style.display = 'none'; }
+
+  function showToast(msg, isError = false) {
+    const toast = document.getElementById('toast');
+    const toastMsg = document.getElementById('toast-msg');
+    toastMsg.textContent = msg;
+    toast.classList.toggle('error', isError);
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  function logout() {
+    sessionStorage.clear();
+    window.location.href = 'index.html';
+  }
+
+  document.getElementById('logout-btn').addEventListener('click', logout);
+
+  // ── XP Display ───────────────────────────────────────
+  function updateXPDisplay(xp) {
+    userXP = xp;
+    const level = levelFromXP(xp);
+    const progress = xpProgress(xp);
+    const circumference = 113.1;
+
+    document.getElementById('xp-level').textContent = level;
+    document.getElementById('xp-points').textContent = `${xp} XP`;
+    document.getElementById('xp-ring-fill').style.strokeDashoffset =
+      circumference * (1 - progress);
+  }
+
+  // ── Week badge ───────────────────────────────────────
+  function updateWeekBadge(start, end) {
+    const weekLabel = document.getElementById('week-label');
+    if (!start || !end) { weekLabel.textContent = 'Week not set'; return; }
+    const fmt = d => {
+      const [y, m, day] = d.split('-');
+      return `${day}/${m}`;
+    };
+    weekLabel.textContent = `${fmt(start)} – ${fmt(end)}`;
+  }
+
+  // ── Star limit helpers ────────────────────────────────
+  function starLimitForDay(day) {
+    return day === 'friday' ? CONFIG.STAR_LIMIT_FRIDAY : CONFIG.STAR_LIMIT_REGULAR;
+  }
+
+  function starsUsedOnDay(day) {
+    const dayVotes = votes[day] || {};
+    return Object.values(dayVotes).filter(itemId => {
+      const item = items.find(i => i.id === itemId);
+      return item && item.is_star;
+    }).length;
+  }
+
+  function updateStarBar() {
+    const limit = starLimitForDay(currentDay);
+    const used = starsUsedOnDay(currentDay);
+    const dayName = DAY_LABELS[currentDay];
+    starInfoText.innerHTML = currentDay === 'friday'
+      ? `On <strong>Friday</strong> you can pick <strong>2 star items</strong>`
+      : `You can pick <strong>1 star item</strong> today`;
+    starUsedBadge.textContent = `${used} / ${limit} used`;
+    starInfoBar.classList.toggle('star-limit-reached', used >= limit);
+  }
+
+  // ── Item used on another day ──────────────────────────
+  function itemUsedOnOtherDay(itemId, excludeDay) {
+    return DAYS.some(day => {
+      if (day === excludeDay) return false;
+      const dayVotes = votes[day] || {};
+      return Object.values(dayVotes).includes(itemId);
+    });
+  }
+
+  // ── Render meal sections ──────────────────────────────
+  function renderMealSections() {
+    mealSections.innerHTML = '';
+    const day = currentDay;
+    const exclusions = DAY_CATEGORY_EXCLUSIONS[day] || [];
+
+    // Update fixed item notice
+    const todayFixed = fixedItems.filter(f => f.day === day);
+    if (todayFixed.length > 0) {
+      const msgs = todayFixed.map(f => {
+        const item = items.find(i => i.id === f.item_id);
+        const catLabel = CATEGORY_LABELS[f.category] || f.category;
+        return item ? `${catLabel}: <strong>${item.name}</strong>` : '';
+      }).filter(Boolean);
+      fixedText.innerHTML = `📌 Fixed for this week — ${msgs.join(', ')}`;
+      fixedNotice.style.display = '';
+    } else {
+      fixedNotice.style.display = 'none';
+    }
+
+    CATEGORIES.forEach(cat => {
+      if (exclusions.includes(cat)) return; // Skip excluded categories
+
+      const catItems = items.filter(i => i.category === cat);
+      if (catItems.length === 0) return;
+
+      const section = document.createElement('div');
+      section.className = 'meal-section';
+
+      // Header
+      const header = document.createElement('div');
+      header.className = 'meal-section-header';
+
+      const iconEl = document.createElement('div');
+      iconEl.className = 'meal-section-icon';
+      iconEl.innerHTML = CATEGORY_ICONS[cat] || '';
+
+      const titleWrap = document.createElement('div');
+      const title = document.createElement('h3');
+      title.className = 'meal-section-title';
+      title.textContent = CATEGORY_LABELS[cat];
+      titleWrap.appendChild(title);
+
+      header.appendChild(iconEl);
+      header.appendChild(titleWrap);
+      section.appendChild(header);
+
+      // Grid
+      const grid = document.createElement('div');
+      grid.className = 'meal-items-grid';
+
+      // Check for fixed item in this category/day
+      const fixedEntry = fixedItems.find(f => f.day === day && f.category === cat);
+
+      catItems.forEach(item => {
+        const card = buildItemCard(item, cat, day, fixedEntry);
+        grid.appendChild(card);
+      });
+
+      section.appendChild(grid);
+      mealSections.appendChild(section);
+    });
+
+    updateStarBar();
+    updateVotedDots();
+  }
+
+  function buildItemCard(item, cat, day, fixedEntry) {
+    const card = document.createElement('div');
+    card.className = 'item-card';
+    card.dataset.id = item.id;
+
+    const dayVotes = votes[day] || {};
+    const selected = dayVotes[cat] === item.id;
+
+    // Determine disabled states
+    const starLimit = starLimitForDay(day);
+    const starsUsed = starsUsedOnDay(day);
+    const otherDayUsed = itemUsedOnOtherDay(item.id, day);
+    const starMaxed = item.is_star && !selected && starsUsed >= starLimit;
+    const isFixed = fixedEntry && fixedEntry.item_id !== item.id;
+    const isFixedThis = fixedEntry && fixedEntry.item_id === item.id;
+
+    if (selected) card.classList.add('selected');
+    if (otherDayUsed || starMaxed || isFixed) card.classList.add('disabled');
+
+    // Image
+    if (item.image_url) {
+      const img = document.createElement('img');
+      img.className = 'item-card-img';
+      img.src = item.image_url;
+      img.alt = item.name;
+      img.loading = 'lazy';
+      img.onerror = () => img.remove();
+      card.appendChild(img);
+    }
+
+    // Body
+    const body = document.createElement('div');
+    body.className = 'item-card-body';
+
+    const name = document.createElement('div');
+    name.className = 'item-card-name';
+    name.textContent = item.name;
+    body.appendChild(name);
+
+    if (item.description) {
+      const desc = document.createElement('div');
+      desc.className = 'item-card-desc';
+      desc.textContent = item.description;
+      body.appendChild(desc);
+    }
+
+    // Tags
+    const tags = document.createElement('div');
+    tags.className = 'item-card-tags';
+
+    if (item.is_star) {
+      const starTag = document.createElement('span');
+      starTag.className = 'star-tag';
+      starTag.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Star`;
+      tags.appendChild(starTag);
+    }
+
+    if (isFixedThis) {
+      const fixedTag = document.createElement('span');
+      fixedTag.className = 'allergen-tag';
+      fixedTag.style.background = 'rgba(26,86,50,0.1)';
+      fixedTag.style.color = 'var(--green)';
+      fixedTag.textContent = '📌 Fixed';
+      tags.appendChild(fixedTag);
+    }
+
+    if (otherDayUsed) {
+      const usedTag = document.createElement('span');
+      usedTag.className = 'allergen-tag';
+      usedTag.style.background = 'rgba(0,0,0,0.06)';
+      usedTag.style.color = '#999';
+      usedTag.textContent = 'Chosen other day';
+      tags.appendChild(usedTag);
+    }
+
+    (item.allergens || []).forEach(a => {
+      const tag = document.createElement('span');
+      tag.className = `allergen-tag ${a}`;
+      tag.textContent = a.charAt(0).toUpperCase() + a.slice(1);
+      tags.appendChild(tag);
+    });
+
+    body.appendChild(tags);
+    card.appendChild(body);
+
+    // Click handler
+    if (!otherDayUsed && !starMaxed && !isFixed) {
+      card.addEventListener('click', () => toggleVote(day, cat, item.id));
+    }
+
+    return card;
+  }
+
+  function toggleVote(day, cat, itemId) {
+    if (!votes[day]) votes[day] = {};
+    const current = votes[day][cat];
+
+    if (current === itemId) {
+      // Deselect
+      delete votes[day][cat];
+    } else {
+      // Check star limit
+      const item = items.find(i => i.id === itemId);
+      if (item && item.is_star) {
+        const limit = starLimitForDay(day);
+        const used = starsUsedOnDay(day);
+        const wasStarSelected = current && items.find(i => i.id === current)?.is_star;
+        const effectiveUsed = wasStarSelected ? used - 1 : used;
+        if (effectiveUsed >= limit) {
+          showToast(`You can only pick ${limit} star item${limit > 1 ? 's' : ''} on ${DAY_LABELS[day]}.`, true);
+          return;
+        }
+      }
+      votes[day][cat] = itemId;
+    }
+
+    renderMealSections();
+  }
+
+  // ── Voted dots ───────────────────────────────────────
+  function updateVotedDots() {
+    DAYS.forEach(day => {
+      const dot = document.getElementById(`dot-${day}`);
+      if (!dot) return;
+      const dayVotes = votes[day] || {};
+      dot.classList.toggle('has-votes', Object.keys(dayVotes).length > 0);
+    });
+  }
+
+  // ── Day selector ─────────────────────────────────────
+  dayBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.classList.contains('disabled-day')) return;
+      dayBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentDay = btn.dataset.day;
+      renderMealSections();
+    });
+  });
+
+  // ── Save votes ───────────────────────────────────────
+  saveBtn.addEventListener('click', saveVotes);
+
+  async function saveVotes() {
+    showLoading('Saving your votes…');
+    try {
+      const userId = session.id;
+      const rows = [];
+      let xpDays = 0;
+
+      DAYS.forEach(day => {
+        const dayVotes = votes[day] || {};
+        Object.entries(dayVotes).forEach(([category, item_id]) => {
+          rows.push({ user_id: userId, day, category, item_id });
+        });
+        if (Object.keys(dayVotes).length > 0) xpDays++;
+      });
+
+      if (rows.length === 0) {
+        hideLoading();
+        showToast('No votes to save yet. Select some items first!', true);
+        return;
+      }
+
+      // Upsert votes (batch)
+      // Delete existing votes for this user first, then insert
+      await deleteUserVotes(userId);
+
+      // Insert in batches of 20 to avoid payload limits
+      for (let i = 0; i < rows.length; i += 20) {
+        await DB.insert('votes', rows.slice(i, i + 20));
+      }
+
+      // Update XP
+      const newXP = xpDays * CONFIG.XP_PER_DAY;
+      await DB.update('users', { xp: newXP }, 'id', userId);
+      updateXPDisplay(newXP);
+
+      Cache.invalidate(`votes_${userId}`);
+      hideLoading();
+      showToast('🎉 Votes saved successfully!');
+      updateVotedDots();
+    } catch (err) {
+      hideLoading();
+      showToast(`Error saving: ${err.message}`, true);
+    }
+  }
+
+  async function deleteUserVotes(userId) {
+    const url = new URL(`${DB.url}/rest/v1/votes`);
+    url.searchParams.set('user_id', `eq.${userId}`);
+    await fetch(url.toString(), {
+      method: 'DELETE',
+      headers: DB.headers(),
+    });
+  }
+
+  // ── Load everything ───────────────────────────────────
+  async function init() {
+    // Display user name
+    const { first, last } = parseNameFromEmail(session.email);
+    document.getElementById('user-name').textContent = `${first} ${last}`.trim();
+
+    showLoading('Loading menu…');
+    try {
+      // Load settings
+      const settingsRows = await Cache.fetch('settings', () =>
+        DB.select('settings', '*')
+      );
+      if (settingsRows && settingsRows.length > 0) {
+        settingsRows.forEach(row => { settings[row.key] = row.value; });
+      }
+
+      // Check voting open
+      if (settings.voting_open === 'false' || settings.voting_open === false) {
+        closedBanner.style.display = '';
+        votingMain.style.display = 'none';
+        hideLoading();
+        return;
+      }
+
+      // Week badge
+      updateWeekBadge(settings.week_start, settings.week_end);
+
+      // Disabled days
+      disabledDays = settings.disabled_days ? JSON.parse(settings.disabled_days) : [];
+      dayBtns.forEach(btn => {
+        if (disabledDays.includes(btn.dataset.day)) {
+          btn.classList.add('disabled-day');
+        }
+      });
+
+      // Set first available day
+      const firstAvailable = DAYS.find(d => !disabledDays.includes(d)) || 'monday';
+      currentDay = firstAvailable;
+      dayBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.day === firstAvailable);
+      });
+
+      // Load items
+      items = await Cache.fetch('items', () =>
+        DB.select('items', '*', { order: 'name.asc' })
+      ) || [];
+
+      // Load fixed items
+      fixedItems = await Cache.fetch('fixed_items', () =>
+        DB.select('fixed_items', '*')
+      ) || [];
+
+      // Load existing votes
+      const existingVotes = await Cache.fetch(`votes_${session.id}`, () =>
+        DB.select('votes', '*', { user_id: `eq.${session.id}` })
+      ) || [];
+
+      existingVotes.forEach(v => {
+        if (!votes[v.day]) votes[v.day] = {};
+        votes[v.day][v.category] = v.item_id;
+      });
+
+      // Load user XP
+      const userRows = await DB.select('users', 'xp', { id: `eq.${session.id}` });
+      const xp = userRows && userRows[0] ? (userRows[0].xp || 0) : 0;
+      updateXPDisplay(xp);
+
+      hideLoading();
+      renderMealSections();
+    } catch (err) {
+      hideLoading();
+      showToast(`Failed to load: ${err.message}`, true);
+      console.error(err);
+    }
+  }
+
+  init();
+})();

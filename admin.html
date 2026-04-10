@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DPS i-Edge · Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body class="app-page admin-page">
+
+  <!-- Admin Header -->
+  <header class="app-header glass-nav admin-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <div class="admin-brand">
+          <div class="admin-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <p class="admin-label">Admin Dashboard</p>
+            <h2 class="admin-title">Menu Management</h2>
+          </div>
+        </div>
+      </div>
+      <div class="header-center">
+        <nav class="admin-tabs">
+          <button class="admin-tab active" data-tab="items">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+            <span>Menu Items</span>
+          </button>
+          <button class="admin-tab" data-tab="results">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <span>Results</span>
+          </button>
+          <button class="admin-tab" data-tab="settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>Settings</span>
+          </button>
+        </nav>
+      </div>
+      <div class="header-right">
+        <button class="btn btn-ghost icon-btn" id="logout-btn" title="Sign out">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TAB: Menu Items -->
+  <div class="admin-panel" id="panel-items">
+    <div class="panel-header">
+      <div>
+        <h2 class="panel-title">Menu Items</h2>
+        <p class="panel-subtitle">Manage all food and drink options. Max <span class="highlight">6 star items</span>.</p>
+      </div>
+      <button class="btn btn-primary" id="add-item-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span>Add Item</span>
+      </button>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="category-filter-wrap">
+      <div class="category-filter" id="category-filter">
+        <button class="cat-btn active" data-cat="all">All</button>
+        <button class="cat-btn" data-cat="morning_drink">Morning Drink</button>
+        <button class="cat-btn" data-cat="fruit">Fruit</button>
+        <button class="cat-btn" data-cat="morning_snack">Morning Snack</button>
+        <button class="cat-btn" data-cat="main_course">Main Course</button>
+        <button class="cat-btn" data-cat="accompaniments">Accompaniments</button>
+        <button class="cat-btn" data-cat="dessert">Dessert</button>
+        <button class="cat-btn" data-cat="evening_snack">Evening Snack</button>
+        <button class="cat-btn" data-cat="evening_drink">Evening Drink</button>
+      </div>
+    </div>
+
+    <div class="star-warning" id="star-warning" style="display:none">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span>6 star items reached — remove one before adding another</span>
+    </div>
+
+    <div class="admin-items-grid" id="admin-items-grid">
+      <!-- Item cards rendered by JS -->
+    </div>
+  </div>
+
+  <!-- TAB: Results -->
+  <div class="admin-panel" id="panel-results" style="display:none">
+    <div class="panel-header">
+      <div>
+        <h2 class="panel-title">Voting Results</h2>
+        <p class="panel-subtitle">Live overview of student preferences</p>
+      </div>
+      <button class="btn btn-secondary" id="refresh-results-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        <span>Refresh</span>
+      </button>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-row" id="stats-row">
+      <div class="stat-card glass-card">
+        <p class="stat-label">Total Students</p>
+        <p class="stat-value" id="stat-total">—</p>
+      </div>
+      <div class="stat-card glass-card">
+        <p class="stat-label">Voted</p>
+        <p class="stat-value" id="stat-voted">—</p>
+      </div>
+      <div class="stat-card glass-card">
+        <p class="stat-label">Participation</p>
+        <p class="stat-value" id="stat-pct">—</p>
+      </div>
+    </div>
+
+    <!-- Day Results -->
+    <div class="results-days" id="results-days">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+
+  <!-- TAB: Settings -->
+  <div class="admin-panel" id="panel-settings" style="display:none">
+    <div class="panel-header">
+      <div>
+        <h2 class="panel-title">Settings</h2>
+        <p class="panel-subtitle">Control voting, week, and day availability</p>
+      </div>
+    </div>
+
+    <div class="settings-grid">
+      <!-- Voting Control -->
+      <div class="settings-card glass-card">
+        <div class="settings-card-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <h3>Voting Control</h3>
+        </div>
+        <p class="settings-desc">Open or close voting for all students globally.</p>
+        <div class="toggle-row">
+          <label class="toggle-label" for="voting-open-toggle">Voting is Open</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="voting-open-toggle" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <button class="btn btn-primary" id="save-voting-status-btn">Save</button>
+      </div>
+
+      <!-- Week Selection -->
+      <div class="settings-card glass-card">
+        <div class="settings-card-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <h3>Week Selection</h3>
+        </div>
+        <p class="settings-desc">Set the dates for the voting week displayed to students.</p>
+        <div class="form-group">
+          <label class="form-label">Week Start (Monday)</label>
+          <input type="date" id="week-start-input" class="form-input" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Week End (Friday)</label>
+          <input type="date" id="week-end-input" class="form-input" />
+        </div>
+        <button class="btn btn-primary" id="save-week-btn">Save Week</button>
+      </div>
+
+      <!-- Day Availability -->
+      <div class="settings-card glass-card">
+        <div class="settings-card-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+          <h3>Day Availability</h3>
+        </div>
+        <p class="settings-desc">Disable days the school is closed (no holiday votes).</p>
+        <div class="day-toggles" id="day-toggles">
+          <div class="day-toggle-row" data-day="monday">
+            <span>Monday</span>
+            <label class="toggle-switch"><input type="checkbox" checked /><span class="toggle-slider"></span></label>
+          </div>
+          <div class="day-toggle-row" data-day="tuesday">
+            <span>Tuesday</span>
+            <label class="toggle-switch"><input type="checkbox" checked /><span class="toggle-slider"></span></label>
+          </div>
+          <div class="day-toggle-row" data-day="wednesday">
+            <span>Wednesday</span>
+            <label class="toggle-switch"><input type="checkbox" checked /><span class="toggle-slider"></span></label>
+          </div>
+          <div class="day-toggle-row" data-day="thursday">
+            <span>Thursday</span>
+            <label class="toggle-switch"><input type="checkbox" checked /><span class="toggle-slider"></span></label>
+          </div>
+          <div class="day-toggle-row" data-day="friday">
+            <span>Friday</span>
+            <label class="toggle-switch"><input type="checkbox" checked /><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="save-days-btn">Save Days</button>
+      </div>
+
+      <!-- Fixed Items -->
+      <div class="settings-card glass-card wide">
+        <div class="settings-card-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <h3>Fixed Items</h3>
+        </div>
+        <p class="settings-desc">Lock a specific item for a day/category (e.g. special occasions). Students will be notified.</p>
+        <div class="fixed-item-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Day</label>
+              <select class="form-input" id="fixed-day-select">
+                <option value="monday">Monday</option>
+                <option value="tuesday">Tuesday</option>
+                <option value="wednesday">Wednesday</option>
+                <option value="thursday">Thursday</option>
+                <option value="friday">Friday</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select class="form-input" id="fixed-cat-select">
+                <option value="morning_drink">Morning Drink</option>
+                <option value="fruit">Fruit</option>
+                <option value="morning_snack">Morning Snack</option>
+                <option value="main_course">Main Course</option>
+                <option value="accompaniments">Accompaniments</option>
+                <option value="dessert">Dessert</option>
+                <option value="evening_snack">Evening Snack</option>
+                <option value="evening_drink">Evening Drink</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Item</label>
+              <select class="form-input" id="fixed-item-select">
+                <option value="">— Select item —</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="add-fixed-item-btn">Fix This Item</button>
+        </div>
+        <div class="fixed-items-list" id="fixed-items-list">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add / Edit Item -->
+  <div class="modal-overlay" id="item-modal" style="display:none">
+    <div class="modal glass-card">
+      <div class="modal-header">
+        <h2 id="modal-title">Add Menu Item</h2>
+        <button class="modal-close" id="modal-close-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="item-edit-id" />
+        <div class="form-group">
+          <label class="form-label">Item Name <span class="required">*</span></label>
+          <input type="text" id="item-name" class="form-input" placeholder="e.g. Mango Lassi" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category <span class="required">*</span></label>
+          <select class="form-input" id="item-category">
+            <option value="">— Select —</option>
+            <option value="morning_drink">Morning Drink</option>
+            <option value="fruit">Fruit</option>
+            <option value="morning_snack">Morning Snack</option>
+            <option value="main_course">Main Course</option>
+            <option value="accompaniments">Accompaniments</option>
+            <option value="dessert">Dessert</option>
+            <option value="evening_snack">Evening Snack</option>
+            <option value="evening_drink">Evening Drink</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea id="item-description" class="form-input form-textarea" placeholder="Brief description (optional)" rows="2"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Image URL</label>
+          <input type="url" id="item-image" class="form-input" placeholder="https://… (optional)" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Allergens</label>
+          <div class="allergen-checkboxes">
+            <label class="allergen-check"><input type="checkbox" value="lactose" id="allergen-lactose" /><span class="allergen-tag lactose">Lactose</span></label>
+            <label class="allergen-check"><input type="checkbox" value="mushroom" id="allergen-mushroom" /><span class="allergen-tag mushroom">Mushroom</span></label>
+            <label class="allergen-check"><input type="checkbox" value="nuts" id="allergen-nuts" /><span class="allergen-tag nuts">Nuts</span></label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="star-toggle-row">
+            <div>
+              <label class="form-label">Star Item</label>
+              <p class="form-hint">Junk food / treat. Limited to 1/day (2 on Friday). Max 6 star items total.</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="item-star" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <span class="form-error" id="item-form-error"></span>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="item-cancel-btn">Cancel</button>
+        <button class="btn btn-primary" id="item-save-btn">
+          <span>Save Item</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Delete Modal -->
+  <div class="modal-overlay" id="delete-modal" style="display:none">
+    <div class="modal modal-sm glass-card">
+      <div class="modal-header">
+        <h2>Delete Item?</h2>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete <strong id="delete-item-name"></strong>? This cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="delete-cancel-btn">Cancel</button>
+        <button class="btn btn-danger" id="delete-confirm-btn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <span class="toast-msg" id="toast-msg"></span>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loading-overlay" style="display:none">
+    <div class="loading-spinner"></div>
+    <p class="loading-text" id="loading-text">Loading…</p>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/crypto.js"></script>
+  <script src="js/cache.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
