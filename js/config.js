@@ -1,6 +1,6 @@
 /**
  * ╔══════════════════════════════════════════╗
- * ║  DPS i-Edge Menu Voting System           ║
+ * ║  DPSI Menu Voting System           ║
  * ║  Configuration File                      ║
  * ╠══════════════════════════════════════════╣
  * ║  IMPORTANT: Replace the values below     ║
@@ -21,13 +21,6 @@ const CONFIG = {
     ADMIN_EMAIL: 'admin@dpsiedge.edu.in',
     ADMIN_PASSWORD: 'dpsimenu!admin',
 
-    // ── XP System ───────────────────────────────────────
-    // XP awarded per day voted
-    XP_PER_DAY: 50,
-    // XP required for each level: level N requires XP_BASE * (N^XP_EXP)
-    XP_BASE: 100,
-    XP_EXP: 1.6,
-
     // ── Star Items ───────────────────────────────────────
     MAX_STAR_ITEMS_TOTAL: 6,
     STAR_LIMIT_REGULAR: 1, // Mon–Thu
@@ -37,36 +30,9 @@ const CONFIG = {
     CACHE_TTL_MS: 5 * 60 * 1000, // 5 minutes
 
     // ── School ──────────────────────────────────────────
-    SCHOOL_NAME: 'DPS i-Edge',
-    EMAIL_DOMAIN: 'school.edu.in',
+    SCHOOL_NAME: 'DPSI',
+    EMAIL_DOMAIN: 'dpsiedge.edu.in',
 };
-
-// XP Helper: XP required to reach a given level
-function xpForLevel(level) {
-    if (level <= 1) return 0;
-    return Math.floor(CONFIG.XP_BASE * Math.pow(level - 1, CONFIG.XP_EXP));
-}
-
-// XP Helper: compute level from total XP
-function levelFromXP(xp) {
-    let level = 1;
-    while (true) {
-        const nextLevelXP = xpForLevel(level + 1);
-        if (xp < nextLevelXP) break;
-        level++;
-        if (level > 100) break;
-    }
-    return level;
-}
-
-// XP progress within current level (0–1)
-function xpProgress(xp) {
-    const level = levelFromXP(xp);
-    const currentLevelXP = xpForLevel(level);
-    const nextLevelXP = xpForLevel(level + 1);
-    if (nextLevelXP === currentLevelXP) return 1;
-    return (xp - currentLevelXP) / (nextLevelXP - currentLevelXP);
-}
 
 // Parse name from email: firstname.lastnameIDNo@domain
 function parseNameFromEmail(email) {

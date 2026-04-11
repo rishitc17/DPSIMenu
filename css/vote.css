@@ -45,77 +45,10 @@
     flex-shrink: 0;
 }
 
-/* XP Badge */
-.xp-badge {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.xp-level-ring {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-}
-
-.xp-ring-svg {
-    width: 40px;
-    height: 40px;
-    transform: rotate(-90deg);
-}
-
-.xp-ring-bg {
-    fill: none;
-    stroke: var(--surface-border);
-    stroke-width: 3;
-}
-
-.xp-ring-fill {
-    fill: none;
-    stroke: var(--green);
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-dasharray: 100.5;
-    stroke-dashoffset: 100.5;
-    transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.xp-level-num {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-    font-weight: 700;
-    font-family: var(--font-mono);
-    color: var(--green);
-}
-
-.xp-info {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-}
-.xp-label {
-    font-size: 0.65rem;
-    color: var(--text-muted);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-}
-.xp-points {
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    font-family: var(--font-mono);
-}
-
 /* ===== STICKY SAVE BAR (top, below header) ===== */
 .sticky-save-bar {
     position: sticky;
-    top: 57px;
+    top: var(--app-header-height, 76px);
     z-index: 60;
     background: rgba(247, 248, 245, 0.94);
     backdrop-filter: blur(20px) saturate(1.6);
@@ -249,7 +182,7 @@
 /* ===== DAY SELECTOR ===== */
 .day-selector-wrap {
     position: sticky;
-    top: 115px;
+    top: calc(var(--app-header-height, 76px) + 68px);
     z-index: 50;
 }
 
@@ -570,14 +503,11 @@
         grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
         gap: 8px;
     }
-    .xp-info {
-        display: none;
-    }
     .sticky-save-bar {
-        top: 53px;
+        top: var(--app-header-height-mobile, 64px);
     }
     .day-selector-wrap {
-        top: 108px;
+        top: calc(var(--app-header-height-mobile, 64px) + 64px);
     }
     .save-bar-hint {
         display: none;

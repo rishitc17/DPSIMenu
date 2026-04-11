@@ -1,4 +1,4 @@
-# DPS i-Edge · Menu Voting System
+# DPSI  · Menu Voting System
 
 A school menu voting platform built with vanilla HTML/CSS/JS, Supabase, and hosted on GitHub Pages.
 

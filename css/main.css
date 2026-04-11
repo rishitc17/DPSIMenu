@@ -40,6 +40,8 @@
 
     --transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    --app-header-height: 76px;
+    --app-header-height-mobile: 64px;
 
     /* Allergen colors — bolder, clearly differentiated */
     --lactose-color: #6d28d9;
@@ -373,6 +375,8 @@ select.form-input {
     position: sticky;
     top: 0;
     z-index: 100;
+    --app-header-height: 76px;
+    --app-header-height-mobile: 64px;
 }
 
 .header-inner {
@@ -400,6 +404,13 @@ select.form-input {
     flex: 2;
     display: flex;
     justify-content: center;
+}
+
+.nav-logo {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    border-radius: 12px;
 }
 
 /* ===== ALLERGEN TAGS ===== */

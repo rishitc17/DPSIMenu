@@ -25,7 +25,6 @@
     let disabledDays = []; // Days disabled by admin
     let allVotesData = []; // All votes (for consensus table)
     let currentDay = 'monday';
-    let userXP = 0;
 
     // ── DOM ──────────────────────────────────────────────
     const loading = document.getElementById('loading-overlay');
@@ -63,18 +62,6 @@
     }
 
     document.getElementById('logout-btn').addEventListener('click', logout);
-
-    // ── XP Display ───────────────────────────────────────
-    function updateXPDisplay(xp) {
-        userXP = xp;
-        const level = levelFromXP(xp);
-        const progress = xpProgress(xp);
-        const circumference = 113.1;
-
-        document.getElementById('xp-level').textContent = level;
-        document.getElementById('xp-points').textContent = `${xp} XP`;
-        document.getElementById('xp-ring-fill').style.strokeDashoffset = circumference * (1 - progress);
-    }
 
     // ── Week badge ───────────────────────────────────────
     function ordinal(n) {
@@ -481,14 +468,12 @@
         try {
             const userId = session.id;
             const rows = [];
-            let xpDays = 0;
 
             DAYS.forEach((day) => {
                 const dayVotes = votes[day] || {};
                 Object.entries(dayVotes).forEach(([category, item_id]) => {
                     rows.push({ user_id: userId, day, category, item_id });
                 });
-                if (Object.keys(dayVotes).length > 0) xpDays++;
             });
 
             if (rows.length === 0) {
@@ -505,11 +490,6 @@
             for (let i = 0; i < rows.length; i += 20) {
                 await DB.insert('votes', rows.slice(i, i + 20));
             }
-
-            // Update XP
-            const newXP = xpDays * CONFIG.XP_PER_DAY;
-            await DB.update('users', { xp: newXP }, 'id', userId);
-            updateXPDisplay(newXP);
 
             Cache.invalidate(`votes_${userId}`);
             Cache.invalidate('all_votes');
@@ -599,11 +579,6 @@
 
             // Load ALL votes for consensus table (cached)
             allVotesData = (await Cache.fetch('all_votes', () => DB.select('votes', '*', {}))) || [];
-
-            // Load user XP
-            const userRows = await DB.select('users', 'xp', { id: `eq.${session.id}` });
-            const xp = userRows && userRows[0] ? userRows[0].xp || 0 : 0;
-            updateXPDisplay(xp);
 
             hideLoading();
             renderMealSections();
