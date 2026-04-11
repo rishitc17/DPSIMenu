@@ -375,7 +375,7 @@ select.form-input {
     position: sticky;
     top: 0;
     z-index: 100;
-    padding-inline: 0;
+    padding: 0;
 }
 
 .header-inner {
@@ -385,11 +385,7 @@ select.form-input {
     gap: 16px;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 12px 18px 12px 8px;
-}
-
-.app-header {
-    padding-inline: 12px;
+    padding: 12px 18px 12px 6px;
 }
 
 .header-left {
@@ -418,6 +414,7 @@ select.form-input {
     width: auto;
     height: 56px;
     max-width: 160px;
+    margin-left: 2px;
     object-fit: contain;
     border-radius: 12px;
 }
