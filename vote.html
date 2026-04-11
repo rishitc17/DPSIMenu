@@ -88,19 +88,19 @@
         <!-- Main Content -->
         <main class="app-main" id="voting-main">
             <!-- Summary Tables -->
-            <div class="summary-tables-section" id="summary-tables-section">
-                <div class="summary-table-block">
-                    <p class="summary-table-title">📊 Consensus Menu</p>
-                    <div class="summary-table-wrap">
+            <div class="summary-tabs" id="summary-tabs">
+                <div class="summary-tabs-header">
+                    <button class="summary-tab active" data-tab="consensus">Consensus</button>
+                    <button class="summary-tab" data-tab="my">Your Selections</button>
+                </div>
+                <div class="summary-table-widgets">
+                    <div class="summary-table-wrap active" data-table="consensus">
                         <table class="summary-table" id="consensus-table">
                             <thead></thead>
                             <tbody></tbody>
                         </table>
                     </div>
-                </div>
-                <div class="summary-table-block">
-                    <p class="summary-table-title">✅ Your Selections</p>
-                    <div class="summary-table-wrap">
+                    <div class="summary-table-wrap" data-table="my">
                         <table class="summary-table" id="my-selections-table">
                             <thead></thead>
                             <tbody></tbody>

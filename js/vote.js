@@ -31,12 +31,16 @@
     const loadingText = document.getElementById('loading-text');
     const mealSections = document.getElementById('meal-sections');
     const dayBtns = document.querySelectorAll('.day-btn');
+    const summaryTabs = document.querySelectorAll('.summary-tab');
+    const summaryTableWrappers = document.querySelectorAll('.summary-table-wrap[data-table]');
     const starInfoText = document.getElementById('star-info-text');
     const starUsedBadge = document.getElementById('star-used-badge');
     const starInfoBar = document.getElementById('star-info-bar');
     const fixedNotice = document.getElementById('fixed-item-notice');
     const fixedText = document.getElementById('fixed-item-text');
     const saveBtn = document.getElementById('save-votes-btn');
+
+    let activeSummaryTab = 'consensus';
 
     // ── Helpers ──────────────────────────────────────────
     function showLoading(text = 'Loading…') {
@@ -61,7 +65,21 @@
         window.location.href = 'index.html';
     }
 
+    function setActiveSummaryTab(tab) {
+        activeSummaryTab = tab;
+        summaryTabs.forEach((btn) => btn.classList.toggle('active', btn.dataset.tab === tab));
+        summaryTableWrappers.forEach((wrap) => wrap.classList.toggle('active', wrap.dataset.table === tab));
+    }
+
     document.getElementById('logout-btn').addEventListener('click', logout);
+
+    summaryTabs.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            if (btn.dataset.tab !== activeSummaryTab) {
+                setActiveSummaryTab(btn.dataset.tab);
+            }
+        });
+    });
 
     // ── Week badge ───────────────────────────────────────
     function ordinal(n) {
@@ -339,9 +357,6 @@
 
     // ── Summary Tables ───────────────────────────────────
     function renderSummaryTables() {
-        const section = document.getElementById('summary-tables-section');
-        if (!section) return;
-
         const activeDays = DAYS.filter((d) => !disabledDays.includes(d));
 
         buildSummaryTable(
@@ -381,6 +396,8 @@
             },
             'my',
         );
+
+        setActiveSummaryTab(activeSummaryTab);
     }
 
     function buildSummaryTable(tableId, activeDays, getCellData, mode) {

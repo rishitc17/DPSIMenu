@@ -179,6 +179,64 @@
     gap: 20px;
 }
 
+/* ===== SUMMARY TABS ===== */
+.summary-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.summary-tabs-header {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-radius: var(--radius-xl);
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    padding: 6px;
+    box-shadow: var(--surface-shadow);
+}
+
+.summary-tab {
+    flex: 1;
+    min-width: 140px;
+    padding: 10px 14px;
+    border-radius: var(--radius-lg);
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+    transition: all var(--transition);
+}
+
+.summary-tab.active {
+    background: var(--green);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+.summary-table-widgets {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.summary-table-wrap {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--surface-border);
+    background: #ffffff;
+    box-shadow: var(--surface-shadow);
+    overflow-x: auto;
+    display: none;
+}
+
+.summary-table-wrap.active {
+    display: block;
+}
+
 /* ===== DAY SELECTOR ===== */
 .day-selector-wrap {
     position: sticky;
@@ -494,7 +552,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
     .app-main {
         padding: 14px 16px 40px;
         gap: 16px;
@@ -512,8 +570,41 @@
     .save-bar-hint {
         display: none;
     }
+    .summary-tabs-header {
+        gap: 6px;
+    }
+    .summary-tab {
+        min-width: 120px;
+        font-size: 0.86rem;
+        padding: 10px 12px;
+    }
     .summary-table th,
     .summary-table td {
         padding: 7px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-inner {
+        flex-wrap: wrap;
+        padding: 10px 12px;
+    }
+    .header-left,
+    .header-center,
+    .header-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .header-center {
+        order: 3;
+    }
+    .save-bar-inner {
+        padding: 0 12px;
+    }
+    .summary-tab {
+        min-width: 100px;
+    }
+    .day-selector {
+        padding: 6px 4px;
     }
 }
