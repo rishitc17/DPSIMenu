@@ -48,13 +48,13 @@
 /* ===== STICKY SAVE BAR (top, below header) ===== */
 .sticky-save-bar {
     position: sticky;
-    top: calc(var(--app-header-height, 76px) + 1px);
+    top: var(--app-header-height, 82px);
     z-index: 60;
-    background: rgba(247, 248, 245, 0.94);
+    background: rgba(247, 248, 245, 0.96);
     backdrop-filter: blur(20px) saturate(1.6);
     -webkit-backdrop-filter: blur(20px) saturate(1.6);
     border-bottom: 1px solid var(--surface-border);
-    padding: 10px 0;
+    padding: 14px 0 12px;
 }
 
 .save-bar-inner {
@@ -182,7 +182,7 @@
 /* ===== DAY SELECTOR ===== */
 .day-selector-wrap {
     position: sticky;
-    top: calc(var(--app-header-height, 76px) + 68px);
+    top: calc(var(--app-header-height, 82px) + 72px);
     z-index: 50;
 }
 
@@ -504,10 +504,10 @@
         gap: 8px;
     }
     .sticky-save-bar {
-        top: calc(var(--app-header-height-mobile, 64px) + 1px);
+        top: var(--app-header-height-mobile, 70px);
     }
     .day-selector-wrap {
-        top: calc(var(--app-header-height-mobile, 64px) + 65px);
+        top: calc(var(--app-header-height-mobile, 70px) + 72px);
     }
     .save-bar-hint {
         display: none;
