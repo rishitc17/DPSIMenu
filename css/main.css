@@ -407,8 +407,9 @@ select.form-input {
 }
 
 .nav-logo {
-    width: 42px;
-    height: 42px;
+    width: auto;
+    height: 56px;
+    max-width: 160px;
     object-fit: contain;
     border-radius: 12px;
 }
