@@ -10,6 +10,12 @@
             href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
             rel="stylesheet"
         />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
         <link rel="stylesheet" href="css/main.css" />
         <link rel="stylesheet" href="css/admin.css" />
     </head>
@@ -21,9 +27,7 @@
                     <img src="assets/logo.png" alt="DPSI Logo" class="nav-logo" />
                     <div class="admin-brand">
                         <div class="admin-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                            </svg>
+                            <i class="fa-solid fa-user-shield"></i>
                         </div>
                         <div>
                             <p class="admin-label">Admin Dashboard</p>
@@ -34,38 +38,22 @@
                 <div class="header-center">
                     <nav class="admin-tabs">
                         <button class="admin-tab active" data-tab="items">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="8" r="6" />
-                                <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
-                            </svg>
+                            <i class="fa-solid fa-utensils"></i>
                             <span>Menu Items</span>
                         </button>
                         <button class="admin-tab" data-tab="results">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="18" y1="20" x2="18" y2="10" />
-                                <line x1="12" y1="20" x2="12" y2="4" />
-                                <line x1="6" y1="20" x2="6" y2="14" />
-                            </svg>
+                            <i class="fa-solid fa-chart-column"></i>
                             <span>Results</span>
                         </button>
                         <button class="admin-tab" data-tab="settings">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="3" />
-                                <path
-                                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
-                                />
-                            </svg>
+                            <i class="fa-solid fa-gear"></i>
                             <span>Settings</span>
                         </button>
                     </nav>
                 </div>
                 <div class="header-right">
                     <button class="btn btn-ghost icon-btn" id="logout-btn" title="Sign out">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                            <polyline points="16 17 21 12 16 7" />
-                            <line x1="21" y1="12" x2="9" y2="12" />
-                        </svg>
+                        <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
                 </div>
             </div>
@@ -81,10 +69,7 @@
                     </p>
                 </div>
                 <button class="btn btn-primary" id="add-item-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <line x1="12" y1="5" x2="12" y2="19" />
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                    </svg>
+                    <i class="fa-solid fa-plus"></i>
                     <span>Add Item</span>
                 </button>
             </div>
@@ -105,11 +90,7 @@
             </div>
 
             <div class="star-warning" id="star-warning" style="display: none">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                    />
-                </svg>
+                <i class="fa-solid fa-star"></i>
                 <span>6 star items reached — remove one before adding another</span>
             </div>
 
@@ -126,11 +107,7 @@
                     <p class="panel-subtitle">Live overview of student preferences</p>
                 </div>
                 <button class="btn btn-secondary" id="refresh-results-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="23 4 23 10 17 10" />
-                        <polyline points="1 20 1 14 7 14" />
-                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
-                    </svg>
+                    <i class="fa-solid fa-arrows-rotate"></i>
                     <span>Refresh</span>
                 </button>
             </div>
@@ -170,10 +147,7 @@
                 <!-- Voting Control -->
                 <div class="settings-card glass-card">
                     <div class="settings-card-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12 6 12 12 16 14" />
-                        </svg>
+                        <i class="fa-solid fa-toggle-on"></i>
                         <h3>Voting Control</h3>
                     </div>
                     <p class="settings-desc">Open or close voting for all students globally.</p>
@@ -190,12 +164,7 @@
                 <!-- Week Selection -->
                 <div class="settings-card glass-card">
                     <div class="settings-card-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                            <line x1="16" y1="2" x2="16" y2="6" />
-                            <line x1="8" y1="2" x2="8" y2="6" />
-                            <line x1="3" y1="10" x2="21" y2="10" />
-                        </svg>
+                        <i class="fa-solid fa-calendar-days"></i>
                         <h3>Week Selection</h3>
                     </div>
                     <p class="settings-desc">Set the dates for the voting week displayed to students.</p>
@@ -213,11 +182,7 @@
                 <!-- Day Availability -->
                 <div class="settings-card glass-card">
                     <div class="settings-card-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path
-                                d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"
-                            />
-                        </svg>
+                        <i class="fa-solid fa-calendar-week"></i>
                         <h3>Day Availability</h3>
                     </div>
                     <p class="settings-desc">Disable days the school is closed (no holiday votes).</p>
@@ -259,9 +224,7 @@
                 <!-- Fixed Items -->
                 <div class="settings-card glass-card wide">
                     <div class="settings-card-header">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                        </svg>
+                        <i class="fa-solid fa-star"></i>
                         <h3>Fixed Items</h3>
                     </div>
                     <p class="settings-desc">
@@ -314,10 +277,7 @@
                 <div class="modal-header">
                     <h2 id="modal-title">Add Menu Item</h2>
                     <button class="modal-close" id="modal-close-btn">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <line x1="18" y1="6" x2="6" y2="18" />
-                            <line x1="6" y1="6" x2="18" y2="18" />
-                        </svg>
+                        <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -421,9 +381,7 @@
 
         <!-- Toast -->
         <div class="toast" id="toast">
-            <svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <polyline points="20 6 9 17 4 12" />
-            </svg>
+            <span class="toast-icon"><i class="fa-solid fa-circle-check"></i></span>
             <span class="toast-msg" id="toast-msg"></span>
         </div>
 

@@ -39,9 +39,10 @@
     white-space: nowrap;
     letter-spacing: -0.01em;
 }
-.week-badge svg {
+.week-badge i {
     width: 13px;
     height: 13px;
+    font-size: 0.95rem;
     flex-shrink: 0;
 }
 
@@ -121,9 +122,9 @@
     color: var(--red);
     margin-bottom: 4px;
 }
-.closed-callout-icon svg {
-    width: 30px;
-    height: 30px;
+.closed-callout-icon i {
+    font-size: 1.35rem;
+    line-height: 1;
 }
 
 .closed-callout-title {
@@ -154,10 +155,9 @@
     font-weight: 600;
     margin-top: 4px;
 }
-.closed-callout-badge svg {
-    width: 12px;
-    height: 12px;
-    fill: currentColor;
+.closed-callout-badge i {
+    font-size: 0.9rem;
+    line-height: 1;
 }
 
 @media (max-width: 480px) {
@@ -331,10 +331,11 @@
     font-weight: 500;
 }
 
-.star-info-bar svg {
+.star-info-bar i {
     width: 15px;
     height: 15px;
-    fill: var(--accent);
+    font-size: 0.95rem;
+    color: var(--accent);
     flex-shrink: 0;
 }
 .star-used-badge {
@@ -353,8 +354,8 @@
     border-color: #fecaca;
     color: var(--red);
 }
-.star-info-bar.star-limit-reached svg {
-    fill: var(--red);
+.star-info-bar.star-limit-reached i {
+    color: var(--red);
 }
 .star-info-bar.star-limit-reached .star-used-badge {
     background: rgba(185, 28, 28, 0.08);
@@ -374,9 +375,10 @@
     color: var(--green);
     font-weight: 500;
 }
-.fixed-item-notice svg {
+.fixed-item-notice i {
     width: 15px;
     height: 15px;
+    font-size: 0.95rem;
     flex-shrink: 0;
 }
 
@@ -512,9 +514,9 @@
     flex-shrink: 0;
     border: 1px solid rgba(26, 86, 50, 0.12);
 }
-.meal-section-icon svg {
-    width: 16px;
-    height: 16px;
+.meal-section-icon i {
+    font-size: 0.95rem;
+    line-height: 1;
 }
 
 .meal-section-title {

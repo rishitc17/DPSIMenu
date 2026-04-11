@@ -1,169 +1,221 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DPSI Menu Voting</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet" href="css/auth.css" />
-</head>
-<body class="auth-page">
-
-  <!-- Animated background -->
-  <div class="bg-canvas">
-    <div class="bg-orb orb-1"></div>
-    <div class="bg-orb orb-2"></div>
-    <div class="bg-orb orb-3"></div>
-    <div class="bg-grid"></div>
-  </div>
-
-  <!-- Auth Container -->
-  <div class="auth-wrapper">
-    <!-- Logo -->
-    <div class="auth-logo">
-      <img src="assets/logo.png" alt="DPSI" id="school-logo" onerror="this.style.display='none'; document.getElementById('logo-text').style.display='block'" />
-      <div id="logo-text" class="logo-text-fallback" style="display:none">
-        <span class="logo-dps">DPS</span><span class="logo-iedge">i·Edge</span>
-      </div>
-    </div>
-
-    <!-- Step 1: Email Entry -->
-    <div class="auth-card glass-card" id="step-email">
-      <div class="auth-card-header">
-        <h1 class="auth-title">Welcome Back</h1>
-        <p class="auth-subtitle">Sign in to vote for your weekly menu</p>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="email-input">School Email</label>
-        <div class="input-wrapper">
-          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
-          <input type="email" id="email-input" class="form-input" placeholder="firstname.lastnameID@school.edu.in" autocomplete="email" />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>DPSI Menu Voting</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/auth.css" />
+    </head>
+    <body class="auth-page">
+        <!-- Animated background -->
+        <div class="bg-canvas">
+            <div class="bg-orb orb-1"></div>
+            <div class="bg-orb orb-2"></div>
+            <div class="bg-orb orb-3"></div>
+            <div class="bg-grid"></div>
         </div>
-        <span class="form-error" id="email-error"></span>
-      </div>
-      <button class="btn btn-primary btn-full" id="email-next-btn">
-        <span>Continue</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </button>
-    </div>
 
-    <!-- Step 2a: First Login - Set Password -->
-    <div class="auth-card glass-card" id="step-first-login" style="display:none">
-      <div class="auth-card-header">
-        <button class="back-btn" id="back-from-first">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <h1 class="auth-title">First Time Here?</h1>
-        <p class="auth-subtitle">Enter your temporary password, then create a new one</p>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Temporary Password</label>
-        <div class="input-wrapper">
-          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <input type="password" id="temp-password-input" class="form-input" placeholder="firstnameDDMM" autocomplete="current-password" />
-          <button class="toggle-pw" data-target="temp-password-input">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </button>
+        <!-- Auth Container -->
+        <div class="auth-wrapper">
+            <!-- Logo -->
+            <div class="auth-logo">
+                <img
+                    src="assets/logo.png"
+                    alt="DPSI"
+                    id="school-logo"
+                    onerror="
+                        this.style.display = 'none';
+                        document.getElementById('logo-text').style.display = 'block';
+                    "
+                />
+                <div id="logo-text" class="logo-text-fallback" style="display: none">
+                    <span class="logo-dps">DPS</span><span class="logo-iedge">i·Edge</span>
+                </div>
+            </div>
+
+            <!-- Step 1: Email Entry -->
+            <div class="auth-card glass-card" id="step-email">
+                <div class="auth-card-header">
+                    <h1 class="auth-title">Welcome Back</h1>
+                    <p class="auth-subtitle">Sign in to vote for your weekly menu</p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email-input">School Email</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-envelope input-icon"></i>
+                        <input
+                            type="email"
+                            id="email-input"
+                            class="form-input"
+                            placeholder="firstname.lastnameID@school.edu.in"
+                            autocomplete="email"
+                        />
+                    </div>
+                    <span class="form-error" id="email-error"></span>
+                </div>
+                <button class="btn btn-primary btn-full" id="email-next-btn">
+                    <span>Continue</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- Step 2a: First Login - Set Password -->
+            <div class="auth-card glass-card" id="step-first-login" style="display: none">
+                <div class="auth-card-header">
+                    <button class="back-btn" id="back-from-first">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <h1 class="auth-title">First Time Here?</h1>
+                    <p class="auth-subtitle">Enter your temporary password, then create a new one</p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Temporary Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input
+                            type="password"
+                            id="temp-password-input"
+                            class="form-input"
+                            placeholder="firstnameDDMM"
+                            autocomplete="current-password"
+                        />
+                        <button class="toggle-pw" data-target="temp-password-input">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <span class="form-error" id="temp-pw-error"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">New Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input
+                            type="password"
+                            id="new-password-input"
+                            class="form-input"
+                            placeholder="At least 6 characters"
+                            autocomplete="new-password"
+                        />
+                        <button class="toggle-pw" data-target="new-password-input">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <span class="form-error" id="new-pw-error"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Confirm New Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input
+                            type="password"
+                            id="confirm-password-input"
+                            class="form-input"
+                            placeholder="Repeat new password"
+                            autocomplete="new-password"
+                        />
+                        <button class="toggle-pw" data-target="confirm-password-input">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <span class="form-error" id="confirm-pw-error"></span>
+                </div>
+                <button class="btn btn-primary btn-full" id="first-login-btn">
+                    <span>Set Password & Enter</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- Step 2b: Normal Login -->
+            <div class="auth-card glass-card" id="step-login" style="display: none">
+                <div class="auth-card-header">
+                    <button class="back-btn" id="back-from-login">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <h1 class="auth-title">Welcome Back</h1>
+                    <p class="auth-subtitle" id="login-name-label">Enter your password to continue</p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input
+                            type="password"
+                            id="login-password-input"
+                            class="form-input"
+                            placeholder="Your password"
+                            autocomplete="current-password"
+                        />
+                        <button class="toggle-pw" data-target="login-password-input">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <span class="form-error" id="login-pw-error"></span>
+                </div>
+                <button class="btn btn-primary btn-full" id="login-btn">
+                    <span>Sign In</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- Step 2c: Admin Login -->
+            <div class="auth-card glass-card" id="step-admin-login" style="display: none">
+                <div class="auth-card-header">
+                    <button class="back-btn" id="back-from-admin">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <h1 class="auth-title">Admin Access</h1>
+                    <p class="auth-subtitle">Restricted area — authorised personnel only</p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Admin Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input
+                            type="password"
+                            id="admin-password-input"
+                            class="form-input"
+                            placeholder="Admin password"
+                            autocomplete="current-password"
+                        />
+                        <button class="toggle-pw" data-target="admin-password-input">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <span class="form-error" id="admin-pw-error"></span>
+                </div>
+                <button class="btn btn-primary btn-full" id="admin-login-btn">
+                    <span>Access Dashboard</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="auth-footer">
+                <p>DPSI · Menu Voting System</p>
+            </div>
         </div>
-        <span class="form-error" id="temp-pw-error"></span>
-      </div>
-      <div class="form-group">
-        <label class="form-label">New Password</label>
-        <div class="input-wrapper">
-          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <input type="password" id="new-password-input" class="form-input" placeholder="At least 6 characters" autocomplete="new-password" />
-          <button class="toggle-pw" data-target="new-password-input">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </button>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loading-overlay" style="display: none">
+            <div class="loading-spinner"></div>
+            <p class="loading-text" id="loading-text">Please wait…</p>
         </div>
-        <span class="form-error" id="new-pw-error"></span>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Confirm New Password</label>
-        <div class="input-wrapper">
-          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <input type="password" id="confirm-password-input" class="form-input" placeholder="Repeat new password" autocomplete="new-password" />
-          <button class="toggle-pw" data-target="confirm-password-input">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </button>
-        </div>
-        <span class="form-error" id="confirm-pw-error"></span>
-      </div>
-      <button class="btn btn-primary btn-full" id="first-login-btn">
-        <span>Set Password & Enter</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </button>
-    </div>
 
-    <!-- Step 2b: Normal Login -->
-    <div class="auth-card glass-card" id="step-login" style="display:none">
-      <div class="auth-card-header">
-        <button class="back-btn" id="back-from-login">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <h1 class="auth-title">Welcome Back</h1>
-        <p class="auth-subtitle" id="login-name-label">Enter your password to continue</p>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Password</label>
-        <div class="input-wrapper">
-          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <input type="password" id="login-password-input" class="form-input" placeholder="Your password" autocomplete="current-password" />
-          <button class="toggle-pw" data-target="login-password-input">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </button>
-        </div>
-        <span class="form-error" id="login-pw-error"></span>
-      </div>
-      <button class="btn btn-primary btn-full" id="login-btn">
-        <span>Sign In</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </button>
-    </div>
-
-    <!-- Step 2c: Admin Login -->
-    <div class="auth-card glass-card" id="step-admin-login" style="display:none">
-      <div class="auth-card-header">
-        <button class="back-btn" id="back-from-admin">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <h1 class="auth-title">Admin Access</h1>
-        <p class="auth-subtitle">Restricted area — authorised personnel only</p>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Admin Password</label>
-        <div class="input-wrapper">
-          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <input type="password" id="admin-password-input" class="form-input" placeholder="Admin password" autocomplete="current-password" />
-          <button class="toggle-pw" data-target="admin-password-input">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </button>
-        </div>
-        <span class="form-error" id="admin-pw-error"></span>
-      </div>
-      <button class="btn btn-primary btn-full" id="admin-login-btn">
-        <span>Access Dashboard</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </button>
-    </div>
-
-    <div class="auth-footer">
-      <p>DPSI · Menu Voting System</p>
-    </div>
-  </div>
-
-  <!-- Loading Overlay -->
-  <div class="loading-overlay" id="loading-overlay" style="display:none">
-    <div class="loading-spinner"></div>
-    <p class="loading-text" id="loading-text">Please wait…</p>
-  </div>
-
-  <script src="js/config.js"></script>
-  <script src="js/supabase.js"></script>
-  <script src="js/crypto.js"></script>
-  <script src="js/auth.js"></script>
-</body>
+        <script src="js/config.js"></script>
+        <script src="js/supabase.js"></script>
+        <script src="js/crypto.js"></script>
+        <script src="js/auth.js"></script>
+    </body>
 </html>
