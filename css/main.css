@@ -41,7 +41,7 @@
     --transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     --app-header-height: 82px;
-    --app-header-height-mobile: 70px;
+    --save-bar-height: 70px;
 
     /* Allergen colors — bolder, clearly differentiated */
     --lactose-color: #6d28d9;

@@ -39,6 +39,8 @@
     const fixedNotice = document.getElementById('fixed-item-notice');
     const fixedText = document.getElementById('fixed-item-text');
     const saveBtn = document.getElementById('save-votes-btn');
+    const header = document.querySelector('.app-header');
+    const stickySaveBar = document.getElementById('sticky-save-bar');
 
     let activeSummaryTab = 'consensus';
 
@@ -58,6 +60,14 @@
         toast.classList.toggle('error', isError);
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function updateStickyOffsets() {
+        if (!header || !stickySaveBar) return;
+        const headerHeight = Math.round(header.getBoundingClientRect().height);
+        const saveBarHeight = Math.round(stickySaveBar.getBoundingClientRect().height);
+        document.documentElement.style.setProperty('--app-header-height', `${headerHeight}px`);
+        document.documentElement.style.setProperty('--save-bar-height', `${saveBarHeight}px`);
     }
 
     function logout() {
@@ -80,6 +90,8 @@
             }
         });
     });
+
+    window.addEventListener('resize', updateStickyOffsets);
 
     // ── Week badge ───────────────────────────────────────
     function ordinal(n) {
@@ -599,6 +611,7 @@
 
             hideLoading();
             renderMealSections();
+            updateStickyOffsets();
         } catch (err) {
             hideLoading();
             showToast(`Failed to load: ${err.message}`, true);

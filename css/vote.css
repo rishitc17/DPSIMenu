@@ -240,7 +240,7 @@
 /* ===== DAY SELECTOR ===== */
 .day-selector-wrap {
     position: sticky;
-    top: calc(var(--app-header-height, 82px) + 72px);
+    top: calc(var(--app-header-height, 82px) + var(--save-bar-height, 70px) + 8px);
     z-index: 50;
 }
 
@@ -560,12 +560,6 @@
     .meal-items-grid {
         grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
         gap: 8px;
-    }
-    .sticky-save-bar {
-        top: var(--app-header-height-mobile, 70px);
-    }
-    .day-selector-wrap {
-        top: calc(var(--app-header-height-mobile, 70px) + 72px);
     }
     .save-bar-hint {
         display: none;
