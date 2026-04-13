@@ -835,7 +835,7 @@ select.form-input {
 }
 [data-theme='dark'] .nav-logo,
 [data-theme='dark'] #school-logo {
-    filter: brightness(1.45) contrast(1.15) saturate(1.2);
+    filter: brightness(1.08) contrast(1.15) saturate(1.1) drop-shadow(0 0 0.32rem rgba(255, 255, 255, 0.12));
     opacity: 0.98;
 }
 [data-theme='dark'] .star-info-bar {
