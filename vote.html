@@ -1,13 +1,20 @@
 <!doctype html>
 <html lang="en">
     <head>
+        <script>
+            // Apply saved theme immediately to prevent flash
+            (function () {
+                var t = localStorage.getItem('dpsi_theme');
+                if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            })();
+        </script>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>DPSI · Menu Voting</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+            href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=DM+Mono:wght@400;500&display=swap"
             rel="stylesheet"
         />
         <link
@@ -37,6 +44,13 @@
                     </div>
                 </div>
                 <div class="header-right">
+                    <button class="menu-summary-btn" id="show-menu-summary-btn">
+                        <i class="fa-solid fa-table-list"></i>
+                        <span>My Menu</span>
+                    </button>
+                    <button class="dark-toggle" id="dark-toggle" title="Toggle dark mode">
+                        <i class="fa-solid fa-moon" id="dark-toggle-icon"></i>
+                    </button>
                     <button class="btn btn-ghost icon-btn" id="logout-btn" title="Sign out">
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
@@ -75,28 +89,6 @@
 
         <!-- Main Content -->
         <main class="app-main" id="voting-main">
-            <!-- Summary Tables -->
-            <div class="summary-tabs" id="summary-tabs">
-                <div class="summary-tabs-header">
-                    <button class="summary-tab active" data-tab="consensus">Consensus</button>
-                    <button class="summary-tab" data-tab="my">Your Selections</button>
-                </div>
-                <div class="summary-table-widgets">
-                    <div class="summary-table-wrap active" data-table="consensus">
-                        <table class="summary-table" id="consensus-table">
-                            <thead></thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                    <div class="summary-table-wrap" data-table="my">
-                        <table class="summary-table" id="my-selections-table">
-                            <thead></thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
             <!-- Day Selector -->
             <div class="day-selector-wrap">
                 <div class="day-selector" id="day-selector">
@@ -147,6 +139,43 @@
             </div>
         </main>
 
+        <!-- Menu Summary Modal -->
+        <div class="modal-overlay menu-summary-modal" id="menu-summary-modal" style="display: none">
+            <div class="modal glass-card">
+                <div class="modal-header">
+                    <h2>Weekly Menu Summary</h2>
+                    <button class="modal-close" id="menu-summary-close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="summary-tabs" id="summary-tabs">
+                        <div class="summary-tabs-header">
+                            <button class="summary-tab active" data-tab="consensus">Consensus</button>
+                            <button class="summary-tab" data-tab="my">Your Selections</button>
+                        </div>
+                        <div class="summary-table-widgets" style="margin-top: 12px">
+                            <div class="summary-table-wrap active" data-table="consensus">
+                                <table class="summary-table" id="consensus-table">
+                                    <thead></thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="summary-table-wrap" data-table="my">
+                                <table class="summary-table" id="my-selections-table">
+                                    <thead></thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-ghost" id="menu-summary-close-btn">Close</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Toast Notification -->
         <div class="toast" id="toast">
             <span class="toast-icon"><i class="fa-solid fa-circle-check"></i></span>
@@ -159,6 +188,42 @@
             <p class="loading-text" id="loading-text">Loading…</p>
         </div>
 
+        <script>
+            // Dark mode
+            (function () {
+                var saved = localStorage.getItem('dpsi_theme');
+                var btn = document.getElementById('dark-toggle');
+                var icon = document.getElementById('dark-toggle-icon');
+                function applyTheme(dark) {
+                    document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+                    icon.className = dark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+                }
+                applyTheme(saved === 'dark');
+                btn.addEventListener('click', function () {
+                    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                    var next = !isDark;
+                    localStorage.setItem('dpsi_theme', next ? 'dark' : 'light');
+                    applyTheme(next);
+                });
+            })();
+            // Menu summary modal
+            (function () {
+                var modal = document.getElementById('menu-summary-modal');
+                var showBtn = document.getElementById('show-menu-summary-btn');
+                if (!modal || !showBtn) return;
+                showBtn.addEventListener('click', function () {
+                    modal.style.display = 'flex';
+                });
+                function closeModal() {
+                    modal.style.display = 'none';
+                }
+                document.getElementById('menu-summary-close').addEventListener('click', closeModal);
+                document.getElementById('menu-summary-close-btn').addEventListener('click', closeModal);
+                modal.addEventListener('click', function (e) {
+                    if (e.target === modal) closeModal();
+                });
+            })();
+        </script>
         <script src="js/config.js"></script>
         <script src="js/supabase.js"></script>
         <script src="js/crypto.js"></script>

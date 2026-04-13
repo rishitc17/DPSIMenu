@@ -35,9 +35,10 @@
 }
 .admin-title {
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 800;
     font-family: var(--font-display);
     color: var(--text-primary);
+    letter-spacing: -0.02em;
 }
 
 /* ===== ADMIN TABS ===== */
@@ -94,7 +95,8 @@
 .panel-title {
     font-size: 1.6rem;
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: -0.03em;
 }
 .panel-subtitle {
     font-size: 0.85rem;
@@ -257,9 +259,10 @@
 }
 .stat-value {
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 800;
     font-family: var(--font-display);
     color: var(--green);
+    letter-spacing: -0.03em;
 }
 
 .results-days {
@@ -287,7 +290,8 @@
 .result-day-title {
     font-family: var(--font-display);
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 800;
+    letter-spacing: -0.02em;
 }
 
 .result-meals {

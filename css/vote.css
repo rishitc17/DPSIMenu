@@ -20,9 +20,9 @@
 .greeting-name {
     font-size: 1.1rem;
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 800;
     color: var(--text-primary);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
 }
 
 .week-badge {
@@ -237,6 +237,32 @@
     display: block;
 }
 
+/* ===== MENU SUMMARY BUTTON ===== */
+.menu-summary-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px;
+    border-radius: var(--radius);
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: var(--font-body);
+    background: var(--green-glass);
+    color: var(--green);
+    border: 1px solid rgba(26, 86, 50, 0.2);
+    transition: all var(--transition);
+    cursor: pointer;
+    white-space: nowrap;
+}
+.menu-summary-btn:hover {
+    background: var(--green-glass-hover);
+    border-color: rgba(26, 86, 50, 0.35);
+    transform: translateY(-1px);
+}
+.menu-summary-btn i {
+    font-size: 0.9rem;
+}
+
 /* ===== DAY SELECTOR ===== */
 .day-selector-wrap {
     position: sticky;
@@ -405,22 +431,24 @@
 }
 
 .summary-table-wrap {
-    overflow-x: auto;
+    width: 85%;
+    margin: 0 auto;
     border-radius: var(--radius-lg);
     border: 1px solid var(--surface-border);
     background: #ffffff;
     box-shadow: var(--surface-shadow);
+    overflow: hidden;
 }
 
 .summary-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.8rem;
-    min-width: 480px;
+    table-layout: fixed;
 }
 
 .summary-table th {
-    padding: 8px 14px;
+    padding: 8px 10px;
     background: var(--bg-2);
     color: var(--text-tertiary);
     font-weight: 700;
@@ -429,23 +457,21 @@
     letter-spacing: 0.05em;
     border-bottom: 1px solid var(--surface-border);
     text-align: left;
-    white-space: nowrap;
+    white-space: normal;
+    word-break: break-word;
 }
 
 .summary-table th:first-child {
-    width: 130px;
-    position: sticky;
-    left: 0;
-    background: var(--bg-2);
-    z-index: 2;
+    width: 18%;
 }
 
 .summary-table td {
-    padding: 8px 14px;
+    padding: 8px 10px;
     border-bottom: 1px solid var(--surface-border);
     color: var(--text-primary);
     vertical-align: middle;
-    white-space: nowrap;
+    white-space: normal;
+    word-break: break-word;
     font-size: 0.8rem;
 }
 
@@ -460,9 +486,6 @@
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.03em;
-    position: sticky;
-    left: 0;
-    z-index: 1;
 }
 
 .summary-table td.voted {

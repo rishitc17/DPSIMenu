@@ -1,13 +1,20 @@
 <!doctype html>
 <html lang="en">
     <head>
+        <script>
+            // Apply saved theme immediately to prevent flash
+            (function () {
+                var t = localStorage.getItem('dpsi_theme');
+                if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            })();
+        </script>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>DPSI Menu Voting</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+            href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=DM+Mono:wght@400;500&display=swap"
             rel="stylesheet"
         />
         <link
@@ -212,6 +219,35 @@
             <div class="loading-spinner"></div>
             <p class="loading-text" id="loading-text">Please wait…</p>
         </div>
+
+        <!-- Dark mode toggle (bottom-right) -->
+        <button
+            class="dark-toggle"
+            id="dark-toggle"
+            title="Toggle dark mode"
+            style="position: fixed; bottom: 20px; right: 20px; z-index: 500"
+        >
+            <i class="fa-solid fa-moon" id="dark-toggle-icon"></i>
+        </button>
+
+        <script>
+            (function () {
+                const saved = localStorage.getItem('dpsi_theme');
+                const btn = document.getElementById('dark-toggle');
+                const icon = document.getElementById('dark-toggle-icon');
+                function applyTheme(dark) {
+                    document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+                    icon.className = dark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+                }
+                applyTheme(saved === 'dark');
+                btn.addEventListener('click', function () {
+                    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                    const next = !isDark;
+                    localStorage.setItem('dpsi_theme', next ? 'dark' : 'light');
+                    applyTheme(next);
+                });
+            })();
+        </script>
 
         <script src="js/config.js"></script>
         <script src="js/supabase.js"></script>
