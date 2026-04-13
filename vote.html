@@ -170,9 +170,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button class="btn btn-ghost" id="menu-summary-close-btn">Close</button>
-                </div>
             </div>
         </div>
 
@@ -218,7 +215,6 @@
                     modal.style.display = 'none';
                 }
                 document.getElementById('menu-summary-close').addEventListener('click', closeModal);
-                document.getElementById('menu-summary-close-btn').addEventListener('click', closeModal);
                 modal.addEventListener('click', function (e) {
                     if (e.target === modal) closeModal();
                 });

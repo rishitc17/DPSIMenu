@@ -314,7 +314,7 @@
         try {
             // Total students
             const users = await DB.select('users', 'id', {});
-            const totalStudents = users ? users.length : 0;
+            const totalStudents = (users ? users.length : 0) - 1;
 
             // Students who voted
             const voterRows = await DB.select('votes', 'user_id', {});
