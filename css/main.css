@@ -824,6 +824,66 @@ select.form-input {
 [data-theme='dark'] .glass-nav {
     background: rgba(15, 20, 16, 0.92);
 }
+[data-theme='dark'] .sticky-save-bar {
+    background: rgba(24, 30, 25, 0.96);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+[data-theme='dark'] .week-badge {
+    background: rgba(57, 182, 107, 0.12);
+    border-color: rgba(57, 182, 107, 0.25);
+    color: #cde9d4;
+}
+[data-theme='dark'] .nav-logo,
+[data-theme='dark'] #school-logo {
+    filter: invert(1) brightness(1.1) contrast(1.05);
+    opacity: 0.95;
+}
+[data-theme='dark'] .star-info-bar {
+    background: rgba(244, 210, 74, 0.14);
+    border-color: rgba(244, 210, 74, 0.32);
+    color: #f9e7b3;
+}
+[data-theme='dark'] .star-info-bar i {
+    color: #f4d35f;
+}
+[data-theme='dark'] .star-used-badge {
+    background: rgba(244, 210, 74, 0.18);
+    border-color: rgba(244, 210, 74, 0.32);
+    color: #121811;
+}
+[data-theme='dark'] .star-info-bar.star-limit-reached {
+    background: rgba(172, 41, 41, 0.16);
+    border-color: rgba(232, 107, 107, 0.28);
+    color: #f5d4d4;
+}
+[data-theme='dark'] .star-info-bar.star-limit-reached i {
+    color: #f9b3b3;
+}
+[data-theme='dark'] .star-info-bar.star-limit-reached .star-used-badge {
+    background: rgba(232, 107, 107, 0.18);
+    border-color: rgba(232, 107, 107, 0.28);
+    color: #ffffff;
+}
+[data-theme='dark'] .fixed-item-notice {
+    background: rgba(56, 160, 90, 0.12);
+    border-color: rgba(56, 160, 90, 0.24);
+    color: #d8f5d7;
+}
+[data-theme='dark'] .allergen-tag.lactose {
+    background: rgba(109, 40, 217, 0.22);
+    color: #f1e7ff;
+    border-color: rgba(109, 40, 217, 0.38);
+}
+[data-theme='dark'] .allergen-tag.mushroom {
+    background: rgba(146, 64, 14, 0.24);
+    color: #fff1d8;
+    border-color: rgba(146, 64, 14, 0.38);
+}
+[data-theme='dark'] .allergen-tag.nuts {
+    background: rgba(194, 65, 12, 0.2);
+    color: #ffe5d2;
+    border-color: rgba(194, 65, 12, 0.38);
+}
 [data-theme='dark'] .modal {
     background: #1e2620 !important;
 }
@@ -854,6 +914,10 @@ select.form-input {
 }
 [data-theme='dark'] .summary-table td.row-label {
     background: #141a15;
+}
+[data-theme='dark'] .summary-table td.voted,
+[data-theme='dark'] .summary-table td.consensus-winner {
+    color: var(--text-primary);
 }
 
 /* ===== TOAST ===== */
