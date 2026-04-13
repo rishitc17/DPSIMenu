@@ -489,7 +489,7 @@
 }
 
 .summary-table td.voted {
-    color: var(--green);
+    color: var(--text-primary);
     font-weight: 600;
 }
 

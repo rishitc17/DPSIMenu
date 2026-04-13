@@ -1,14 +1,14 @@
 /* ===== CSS VARIABLES ===== */
 :root {
-    --green: #1a5632;
-    --green-light: #22703f;
-    --green-xlight: #2e8f52;
-    --green-glass: rgba(26, 86, 50, 0.08);
-    --green-glass-hover: rgba(26, 86, 50, 0.14);
-    --accent: #d4a017;
-    --accent-light: rgba(212, 160, 23, 0.13);
-    --red: #b91c1c;
-    --red-light: rgba(185, 28, 28, 0.09);
+    --green: #24804a;
+    --green-light: #31995d;
+    --green-xlight: #65bf8c;
+    --green-glass: rgba(33, 120, 67, 0.1);
+    --green-glass-hover: rgba(33, 120, 67, 0.18);
+    --accent: #f2c94c;
+    --accent-light: rgba(242, 201, 76, 0.18);
+    --red: #c94646;
+    --red-light: rgba(201, 70, 70, 0.14);
 
     /* Cleaner, higher-contrast background palette — Notion/Linear inspired */
     --bg: #f7f8f5;
@@ -57,56 +57,42 @@
     --star-color: #92400e;
     --star-bg: #fefce8;
     --star-border: #fde047;
-    --star-outline: #d4a017;
-
-    --transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    --app-header-height: 82px;
-    --save-bar-height: 70px;
-
-    /* Allergen colors — bolder, clearly differentiated */
-    --lactose-color: #6d28d9;
-    --lactose-bg: #ede9fe;
-    --lactose-border: #c4b5fd;
-    --mushroom-color: #92400e;
-    --mushroom-bg: #fef3c7;
-    --mushroom-border: #fcd34d;
-    --nuts-color: #c2410c;
-    --nuts-bg: #ffedd5;
-    --nuts-border: #fed7aa;
-
-    --star-color: #92400e;
-    --star-bg: #fefce8;
-    --star-border: #fde047;
-    --star-outline: #d4a017;
+    --star-outline: #f4c43a;
 }
 
 /* ===== DARK MODE VARIABLES ===== */
 [data-theme='dark'] {
     --bg: #0f1410;
-    --bg-2: #1a1f1b;
-    --surface: rgba(30, 38, 32, 0.9);
-    --surface-solid: #1e2620;
-    --surface-2: rgba(30, 38, 32, 0.6);
-    --surface-border: rgba(255, 255, 255, 0.08);
-    --surface-border-strong: rgba(255, 255, 255, 0.14);
-    --surface-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.25);
-    --surface-shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.3), 0 12px 32px rgba(0, 0, 0, 0.35);
-    --text-primary: #f0f4f1;
-    --text-secondary: #c4cfc6;
-    --text-tertiary: #8a9e8d;
-    --text-muted: #5a7060;
-    --green-glass: rgba(56, 160, 90, 0.12);
-    --green-glass-hover: rgba(56, 160, 90, 0.2);
+    --bg-2: #1b2220;
+    --surface: rgba(30, 38, 32, 0.95);
+    --surface-solid: #191f1a;
+    --surface-2: rgba(30, 38, 32, 0.72);
+    --surface-border: rgba(255, 255, 255, 0.1);
+    --surface-border-strong: rgba(255, 255, 255, 0.18);
+    --surface-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.35);
+    --surface-shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.4);
+    --text-primary: #e8efe9;
+    --text-secondary: #c4d2c2;
+    --text-tertiary: #8fa293;
+    --text-muted: #6a7b69;
+    --accent: #f4d35f;
+    --accent-light: rgba(244, 211, 95, 0.24);
+    --green: #39b974;
+    --green-light: #4fca8a;
+    --green-xlight: #7fe3b3;
+    --green-glass: rgba(56, 160, 90, 0.16);
+    --green-glass-hover: rgba(56, 160, 90, 0.28);
+    --red: #e86b6b;
+    --red-light: rgba(232, 107, 107, 0.18);
     --star-bg: #1f1a08;
-    --star-border: #5a4a00;
-    --star-color: #f0c040;
-    --lactose-bg: #1e1530;
-    --lactose-border: #5b3fa0;
-    --mushroom-bg: #1e1500;
-    --mushroom-border: #7a5a00;
-    --nuts-bg: #1e0e00;
-    --nuts-border: #8a4020;
+    --star-border: #7b5a00;
+    --star-color: #f5cc54;
+    --lactose-bg: #271a39;
+    --lactose-border: #8762d6;
+    --mushroom-bg: #2d2110;
+    --mushroom-border: #a57615;
+    --nuts-bg: #2a180f;
+    --nuts-border: #b0572f;
 }
 
 /* ===== RESET ===== */
