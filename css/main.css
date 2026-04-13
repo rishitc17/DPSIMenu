@@ -835,7 +835,7 @@ select.form-input {
 }
 [data-theme='dark'] .nav-logo,
 [data-theme='dark'] #school-logo {
-    filter: invert(1) brightness(1.1) contrast(1.05);
+    filter: grayscale(1) brightness(1.35) contrast(1.05);
     opacity: 0.95;
 }
 [data-theme='dark'] .star-info-bar {
@@ -846,10 +846,25 @@ select.form-input {
 [data-theme='dark'] .star-info-bar i {
     color: #f4d35f;
 }
-[data-theme='dark'] .star-used-badge {
+[data-theme='dark'] .star-info-bar .star-used-badge {
     background: rgba(244, 210, 74, 0.18);
     border-color: rgba(244, 210, 74, 0.32);
-    color: #121811;
+    color: var(--text-primary);
+}
+[data-theme='dark'] .btn-primary {
+    background: #2f7e5b;
+    color: #f4f8f3;
+    box-shadow: 0 4px 12px rgba(57, 182, 107, 0.2);
+}
+[data-theme='dark'] .btn-primary:hover {
+    background: #3ca77b;
+}
+[data-theme='dark'] .day-btn.active {
+    background: rgba(57, 182, 107, 0.18);
+    color: var(--text-primary);
+}
+[data-theme='dark'] .day-btn.active:hover {
+    background: rgba(57, 182, 107, 0.22);
 }
 [data-theme='dark'] .star-info-bar.star-limit-reached {
     background: rgba(172, 41, 41, 0.16);
