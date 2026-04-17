@@ -105,6 +105,10 @@ const DB = {
         const url = new URL(`${this.url}/rest/v1/${table}`);
         if (filterKey) {
             url.searchParams.set(filterKey, `eq.${filterVal}`);
+        } else {
+            // Supabase REST requires a WHERE filter for DELETE.
+            // Use a safe always-true filter on the primary key to remove all rows.
+            url.searchParams.set('id', 'not.is.null');
         }
         const res = await fetch(url.toString(), {
             method: 'DELETE',
