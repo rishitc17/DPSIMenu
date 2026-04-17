@@ -92,6 +92,13 @@
     margin-bottom: 24px;
 }
 
+.panel-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
 .panel-title {
     font-size: 1.6rem;
     font-family: var(--font-display);

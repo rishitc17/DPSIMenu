@@ -37,7 +37,6 @@
                             <i class="fa-solid fa-user-shield"></i>
                         </div>
                         <div>
-                            <p class="admin-label">Admin Dashboard</p>
                             <h2 class="admin-title">Menu Management</h2>
                         </div>
                     </div>
@@ -116,10 +115,16 @@
                     <h2 class="panel-title">Voting Results</h2>
                     <p class="panel-subtitle">Live overview of student preferences</p>
                 </div>
-                <button class="btn btn-secondary" id="refresh-results-btn">
-                    <i class="fa-solid fa-arrows-rotate"></i>
-                    <span>Refresh</span>
-                </button>
+                <div class="panel-actions">
+                    <button class="btn btn-secondary" id="refresh-results-btn">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                        <span>Refresh</span>
+                    </button>
+                    <button class="btn btn-danger" id="reset-votes-btn">
+                        <i class="fa-solid fa-trash"></i>
+                        <span>Reset Votes</span>
+                    </button>
+                </div>
             </div>
 
             <!-- Stats Row -->

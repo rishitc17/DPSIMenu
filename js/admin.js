@@ -308,6 +308,22 @@
 
     // ── Results Tab ───────────────────────────────────
     document.getElementById('refresh-results-btn').addEventListener('click', loadResults);
+    document.getElementById('reset-votes-btn').addEventListener('click', async () => {
+        const confirmed = window.confirm('Resetting votes will permanently delete all vote records. Continue?');
+        if (!confirmed) return;
+
+        showLoading('Resetting votes…');
+        try {
+            await DB.delete('votes');
+            Cache.invalidate('all_votes');
+            hideLoading();
+            showToast('All votes have been reset.');
+            await loadResults();
+        } catch (err) {
+            hideLoading();
+            showToast(`Error resetting votes: ${err.message}`, true);
+        }
+    });
 
     async function loadResults() {
         showLoading('Loading results…');
