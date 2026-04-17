@@ -62,10 +62,10 @@
     }
 
     function updateStickyOffsets() {
-        if (!header || !stickySaveBar) return;
+        if (!header) return;
         const headerHeight = Math.round(header.getBoundingClientRect().height);
-        const saveBarHeight = Math.round(stickySaveBar.getBoundingClientRect().height);
         document.documentElement.style.setProperty('--app-header-height', `${headerHeight}px`);
+        const saveBarHeight = stickySaveBar ? Math.round(stickySaveBar.getBoundingClientRect().height) : 0;
         document.documentElement.style.setProperty('--save-bar-height', `${saveBarHeight}px`);
     }
 
@@ -548,7 +548,8 @@
             // Check voting open
             if (settings.voting_open === 'false' || settings.voting_open === false) {
                 document.getElementById('voting-closed-screen').style.display = 'flex';
-                document.getElementById('sticky-save-bar').style.display = 'none';
+                const sticky = document.getElementById('sticky-save-bar');
+                if (sticky) sticky.style.display = 'none';
                 document.getElementById('voting-main').style.display = 'none';
                 hideLoading();
                 return;
