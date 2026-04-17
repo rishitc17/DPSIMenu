@@ -38,7 +38,6 @@
     const starInfoBar = document.getElementById('star-info-bar');
     const fixedNotice = document.getElementById('fixed-item-notice');
     const fixedText = document.getElementById('fixed-item-text');
-    const saveBtn = document.getElementById('save-votes-btn');
     const header = document.querySelector('.app-header');
     const stickySaveBar = document.getElementById('sticky-save-bar');
 
@@ -322,39 +321,64 @@
 
         // Click handler
         if (!otherDayUsed && !starMaxed && !isFixed) {
-            card.addEventListener('click', () => toggleVote(day, cat, item.id));
+            card.addEventListener('click', async () => {
+                await toggleVote(day, cat, item.id);
+            });
         }
 
         return card;
     }
 
-    function toggleVote(day, cat, itemId) {
+    async function toggleVote(day, cat, itemId) {
         if (!votes[day]) votes[day] = {};
         const current = votes[day][cat];
+        const userId = session.id;
+        const item = items.find((i) => i.id === itemId);
 
-        if (current === itemId) {
-            // Deselect
-            delete votes[day][cat];
-        } else {
-            // Check star limit
-            const item = items.find((i) => i.id === itemId);
-            if (item && item.is_star) {
-                const limit = starLimitForDay(day);
-                const used = starsUsedOnDay(day);
-                const wasStarSelected = current && items.find((i) => i.id === current)?.is_star;
-                const effectiveUsed = wasStarSelected ? used - 1 : used;
-                if (effectiveUsed >= limit) {
-                    showToast(
-                        `You can only pick ${limit} star item${limit > 1 ? 's' : ''} on ${DAY_LABELS[day]}.`,
-                        true,
-                    );
-                    return;
-                }
+        if (item && item.is_star && current !== itemId) {
+            const limit = starLimitForDay(day);
+            const used = starsUsedOnDay(day);
+            const wasStarSelected = current && items.find((i) => i.id === current)?.is_star;
+            const effectiveUsed = wasStarSelected ? used - 1 : used;
+            if (effectiveUsed >= limit) {
+                showToast(`You can only pick ${limit} star item${limit > 1 ? 's' : ''} on ${DAY_LABELS[day]}.`, true);
+                return;
             }
-            votes[day][cat] = itemId;
         }
 
-        renderMealSections();
+        showLoading(current === itemId ? 'Removing vote…' : 'Saving vote…');
+        try {
+            if (current) {
+                await deleteUserVote(userId, day, cat);
+                allVotesData = allVotesData.filter(
+                    (v) => !(v.user_id === userId && v.day === day && v.category === cat),
+                );
+            }
+
+            if (current === itemId) {
+                delete votes[day][cat];
+                showToast('Vote removed.');
+            } else {
+                await DB.insert('votes', {
+                    user_id: userId,
+                    day,
+                    category: cat,
+                    item_id: itemId,
+                });
+
+                votes[day][cat] = itemId;
+                allVotesData.push({ user_id: userId, day, category: cat, item_id: itemId });
+                showToast('Vote saved.');
+            }
+
+            Cache.invalidate(`votes_${userId}`);
+            Cache.invalidate('all_votes');
+        } catch (err) {
+            showToast(`Error saving vote: ${err.message}`, true);
+        } finally {
+            hideLoading();
+            renderMealSections();
+        }
     }
 
     // ── Voted dots ───────────────────────────────────────
@@ -489,61 +513,20 @@
         });
     });
 
-    // ── Save votes ───────────────────────────────────────
-    saveBtn.addEventListener('click', saveVotes);
-
-    async function saveVotes() {
-        showLoading('Saving your votes…');
-        try {
-            const userId = session.id;
-            const rows = [];
-
-            DAYS.forEach((day) => {
-                const dayVotes = votes[day] || {};
-                Object.entries(dayVotes).forEach(([category, item_id]) => {
-                    rows.push({ user_id: userId, day, category, item_id });
-                });
-            });
-
-            if (rows.length === 0) {
-                hideLoading();
-                showToast('No votes to save yet. Select some items first!', true);
-                return;
-            }
-
-            // Upsert votes (batch)
-            // Delete existing votes for this user first, then insert
-            await deleteUserVotes(userId);
-
-            // Insert in batches of 20 to avoid payload limits
-            for (let i = 0; i < rows.length; i += 20) {
-                await DB.insert('votes', rows.slice(i, i + 20));
-            }
-
-            Cache.invalidate(`votes_${userId}`);
-            Cache.invalidate('all_votes');
-
-            // Refresh local allVotesData so consensus table updates
-            allVotesData = await DB.select('votes', '*', {});
-            Cache.set('all_votes', allVotesData);
-
-            hideLoading();
-            showToast('🎉 Votes saved successfully!');
-            updateVotedDots();
-            renderSummaryTables();
-        } catch (err) {
-            hideLoading();
-            showToast(`Error saving: ${err.message}`, true);
-        }
-    }
-
-    async function deleteUserVotes(userId) {
+    async function deleteUserVote(userId, day, category) {
         const url = new URL(`${DB.url}/rest/v1/votes`);
         url.searchParams.set('user_id', `eq.${userId}`);
-        await fetch(url.toString(), {
+        url.searchParams.set('day', `eq.${day}`);
+        url.searchParams.set('category', `eq.${category}`);
+
+        const res = await fetch(url.toString(), {
             method: 'DELETE',
             headers: DB.headers(),
         });
+        if (!res.ok) {
+            const err = await res.json().catch(() => ({ message: res.statusText }));
+            throw new Error(err.message || `HTTP ${res.status}`);
+        }
     }
 
     // ── Load everything ───────────────────────────────────
