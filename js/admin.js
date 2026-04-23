@@ -173,6 +173,25 @@
     // ── Add/Edit Item Modal ───────────────────────────
     document.getElementById('add-item-btn').addEventListener('click', () => openAddModal());
 
+    document.getElementById('clear-items-btn').addEventListener('click', async () => {
+        const confirmed = window.confirm('Clear Items will permanently delete ALL menu items. Continue?');
+        if (!confirmed) return;
+
+        showLoading('Clearing items…');
+        try {
+            await DB.delete('items');
+            allItems = [];
+            Cache.invalidate('items');
+            hideLoading();
+            renderItems();
+            populateFixedItemSelect();
+            showToast('All items have been cleared.');
+        } catch (err) {
+            hideLoading();
+            showToast(`Error clearing items: ${err.message}`, true);
+        }
+    });
+
     function openAddModal() {
         editingItemId = null;
         document.getElementById('modal-title').textContent = 'Add Menu Item';

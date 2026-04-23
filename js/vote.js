@@ -41,7 +41,7 @@
     const header = document.querySelector('.app-header');
     const stickySaveBar = document.getElementById('sticky-save-bar');
 
-    let activeSummaryTab = 'consensus';
+    let activeSummaryTab = 'my';
 
     // ── Helpers ──────────────────────────────────────────
     function showLoading(text = 'Loading…') {
