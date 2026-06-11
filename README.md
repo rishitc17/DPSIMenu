@@ -2,7 +2,7 @@
 
 A menu voting system for my school.
 
-## Live Demo
+## Live Website
 
 [Visit Website](https://dpsimenu.in) — Only accessible through valid school email IDs
 
