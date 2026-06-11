@@ -4,8 +4,7 @@ A menu voting system for my school.
 
 ## Live Demo
 
-[Visit Website](https://dpsimenu.in)
-Only accessible through valid school email IDs
+[Visit Website](https://dpsimenu.in) — Only accessible through valid school email IDs
 
 ## Overview
 
