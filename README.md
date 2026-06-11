@@ -1,22 +1,39 @@
-# DPSI  · Menu Voting System
+# School Menu Voting System
 
-A school menu voting platform built with vanilla HTML/CSS/JS, Supabase, and hosted on GitHub Pages.
+A menu voting system for my school.
 
----
+## Live Demo
 
-For each student, generate a SHA-256 hash of their temporary password (`firstnameDDMM`) and insert into the `users` table.
+[Visit Website](https://dpsimenu.in)
+Only accessible through valid school email IDs
 
-**Generate hash (browser console):**
-```js
-async function sha256(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(x=>x.toString(16).padStart(2,'0')).join('');
-}
-sha256('john0115').then(console.log);
-```
+## Overview
 
-**Insert student (in Supabase SQL Editor):**
-```sql
-INSERT INTO users (email, password_hash, password_changed) VALUES
-  ('john.doe23@school.edu.in', '<hash>', FALSE);
-```
+This project aims to give students a choice in the order of items in the school menu. It was created after observing students' frustration with the combinations of food on certain days, and this system allows them to vote for their preferences and reduces frustration.
+
+## Features
+
+- Admin CMS for item input
+- Proper vote collection via database
+- Majority-based final outcome + edge-case handling
+
+## Technologies
+
+- HTML
+- CSS
+- JavaScript
+- Supabase
+
+## Screenshots
+
+![Student voting page](.github/School_Menu_Voting_System.png)
+
+## Future Improvements
+
+- Automate data inputs from pre-created menu plans
+- Provide detailed reports based on voting statistics
+
+## Status
+
+Complete
+Ready for deployment
